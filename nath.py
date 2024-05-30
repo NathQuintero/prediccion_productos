@@ -140,6 +140,8 @@ def reproducir_audio(mp3_fp):
 
 class_names = open("./clases (1).txt", "r").readlines()
 
+img_file_buffer = None
+
 if option== "Tomar foto":
     # Opción para capturar una imagen desde la cámara
     img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
