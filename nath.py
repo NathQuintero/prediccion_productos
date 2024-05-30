@@ -71,12 +71,41 @@ with st.spinner('Modelo está cargando..'):
     model = load_model()
 
 with st.sidebar:
-    st.video("https://www.youtube.com/watch?v=xxUHCtHnVk8")
-    st.title("Reconocimiento de imagen")
-    st.subheader("Reconocimiento de imagen para productos")
+    option = st.selectbox(
+    "Que te gustaria usar para subir la foto?",
+    ("Tomar foto", "Subir archivo", "URL"),
+    index=None,
+    placeholder="Selecciona como subir la foto",
+    )
+    st.markdown("Cómo poner el producto correctamente en la camara?") 
+    # Ruta del archivo de video
+    video_file_path = './videos/SI.mp4'
+    # Lee el contenido del archivo de video
+    try:
+        with open(video_file_path, 'rb') as video_file:
+            video_bytes = video_file.read()
+
+        # Reproduce el video
+        st.video(video_bytes)
+    except FileNotFoundError:
+        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
+
+
+    # Ruta del archivo de video
+    video_file_path = './videos/NO.mp4'
+    # Lee el contenido del archivo de video
+    try:
+        with open(video_file_path, 'rb') as video_file:
+            video_bytes = video_file.read()
+
+        # Reproduce el video
+        st.video(video_bytes)
+    except FileNotFoundError:
+        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
     confianza = st.slider("Seleccione el nivel de Confianza", 0, 100, 50) / 100
 
-st.image('productose.jpg')
+# Título de la página
+st.image("./videos/banner.png", use_column_width=True)
 st.title("Modelo de Identificación de Imagenes")
 st.write("Desarrollo Proyecto Final de Inteligencia Artificial : Aplicando modelos de Redes Convolucionales e Imagenes")
 st.write("""
