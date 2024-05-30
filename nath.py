@@ -40,6 +40,14 @@ import base64
 
 warnings.filterwarnings("ignore")
 
+def generar_saludo():
+    texto = "¡Hola! Bienvenido a la detección de productos."
+    tts = gTTS(text=texto, lang='es')
+    mp3_fp = BytesIO()
+    tts.write_to_fp(mp3_fp)
+    mp3_fp.seek(0)
+    return mp3_fp
+
 
 # set some pre-defined configurations for the page, such as the page title, logo-icon, page loading state (whether the page is loaded automatically or you need to perform some action for loading)
 st.set_page_config(
@@ -70,10 +78,12 @@ def load_model():
 with st.spinner('Modelo está cargando..'):
     model = load_model()
 
+
+
 with st.sidebar:
     option = st.selectbox(
     "Que te gustaria usar para subir la foto?",
-    ("Tomar foto", "Subir archivo", "URL"),
+    (" ","Tomar foto", "Subir archivo", "URL"),
     index=None,
     placeholder="Selecciona como subir la foto",
     )
@@ -137,6 +147,11 @@ def reproducir_audio(mp3_fp):
     audio_base64 = base64.b64encode(audio_bytes).decode()
     audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
     st.markdown(audio_html, unsafe_allow_html=True)
+
+
+# Generar y reproducir el saludo al inicio
+mp3_fp = generar_saludo()
+reproducir_audio(mp3_fp)
 
 class_names = open("./clases (1).txt", "r").readlines()
 
