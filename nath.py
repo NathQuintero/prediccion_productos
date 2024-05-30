@@ -75,9 +75,9 @@ with st.sidebar:
     "Que te gustaria usar para subir la foto?",
     ("Tomar foto", "Subir archivo", "URL"),
     index=None,
-    confianza = st.slider("Seleccione el nivel de Confianza", 0, 100, 50) / 100
     placeholder="Selecciona como subir la foto",
     )
+    confianza = st.slider("Seleccione el nivel de Confianza", 0, 100, 50) / 100
     st.markdown("Cómo poner el producto correctamente en la camara?") 
     # Ruta del archivo de video
     video_file_path = './videos/SI.mp4'
