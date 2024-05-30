@@ -13,7 +13,7 @@ import base64
 warnings.filterwarnings("ignore")
 
 st.set_page_config(
-    page_title="Reconocimiento de Productos",
+    page_title="Reconocimiento de angelly",
     page_icon=":smile:",
     initial_sidebar_state='auto'
 )
