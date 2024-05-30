@@ -1,3 +1,30 @@
+# streamlit_audio_recorder y whisper by Alfredo Diaz - version Mayo 2024
+
+# En VsC seleccione la version de Python (recomiendo 3.9) 
+#CTRL SHIFT P  para crear el enviroment (Escriba Python Create Enviroment) y luego venv 
+
+#o puede usar el siguiente comando en el shell
+#Vaya a "view" en el menú y luego a terminal y lance un terminal.
+#python -m venv env
+
+#Verifique que el terminal inicio con el enviroment o en la carpeta del proyecto active el env.
+#cd D:\flores\env\Scripts\
+#.\activate 
+
+#Debe quedar asi: (.venv) D:\proyectos_ia\Flores>
+
+#Puedes verificar que no tenga ningun libreria preinstalada con
+#pip freeze
+#Actualicie pip con pip install --upgrade pip
+
+#pip install tensorflow==2.15 La que tiene instalada Google Colab o con la versión qu fué entrenado el modelo
+#Verifique se se instaló numpy, no trate de instalar numpy con pip install numpy, que puede instalar una version diferente
+#pip install streamlit
+#Verifique se se instaló no trante de instalar con pip install pillow
+#Esta instalacion se hace si la requiere pip install opencv-python
+
+#Descargue una foto de una flor que le sirva de ícono 
+
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import streamlit as st  
@@ -13,7 +40,7 @@ import base64
 warnings.filterwarnings("ignore")
 
 st.set_page_config(
-    page_title="Reconocimiento de angelly",
+    page_title="Reconocimiento de Productos",
     page_icon=":smile:",
     initial_sidebar_state='auto'
 )
