@@ -107,8 +107,6 @@ with st.sidebar:
 
 # Título de la página
 st.image("./videos/banner.png", use_column_width=True)
-st.title("Modelo de Identificación de Imagenes")
-st.write("Desarrollo Proyecto Final de Inteligencia Artificial : Aplicando modelos de Redes Convolucionales e Imagenes")
 st.write("""
          # Detección de Productos
          """
@@ -142,12 +140,17 @@ def reproducir_audio(mp3_fp):
 
 class_names = open("./clases (1).txt", "r").readlines()
 
-# Opción para capturar una imagen desde la cámara
-img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
+if option== "Tomar foto":
+    # Opción para capturar una imagen desde la cámara
+    img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
-# Opción para cargar una imagen desde un archivo local
-if img_file_buffer is None:
-    img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
+    # Opción para cargar una imagen desde un archivo local
+    if img_file_buffer is None:
+        img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
+    
+else:
+    print("Selecciona una opcion para empear a predecir")
+
 
 # Opción para cargar una imagen desde una URL
 if img_file_buffer is None:
