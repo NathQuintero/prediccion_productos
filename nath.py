@@ -75,6 +75,7 @@ with st.sidebar:
     "Que te gustaria usar para subir la foto?",
     ("Tomar foto", "Subir archivo", "URL"),
     index=None,
+    confianza = st.slider("Seleccione el nivel de Confianza", 0, 100, 50) / 100
     placeholder="Selecciona como subir la foto",
     )
     st.markdown("Cómo poner el producto correctamente en la camara?") 
@@ -102,7 +103,7 @@ with st.sidebar:
         st.video(video_bytes)
     except FileNotFoundError:
         st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
-    confianza = st.slider("Seleccione el nivel de Confianza", 0, 100, 50) / 100
+    
 
 # Título de la página
 st.image("./videos/banner.png", use_column_width=True)
