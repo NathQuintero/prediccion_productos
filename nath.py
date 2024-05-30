@@ -36,14 +36,24 @@ from io import BytesIO
 import warnings
 from gtts import gTTS
 import base64
+import pyttsx3
 
 warnings.filterwarnings("ignore")
 
+# Inicializar el motor de síntesis de voz
+engine = pyttsx3.init()
+
+# set some pre-defined configurations for the page, such as the page title, logo-icon, page loading state (whether the page is loaded automatically or you need to perform some action for loading)
 st.set_page_config(
-    page_title="Reconocimiento de Productos",
-    page_icon=":smile:",
-    initial_sidebar_state='auto'
-)
+  page_title="¿Que producto es?",
+  page_icon="icono.ico",
+  initial_sidebar_state='auto',
+  menu_items={
+        'Report a bug': 'http://www.unab.edu.co',
+        'Get Help': "https://docs.streamlit.io/get-started/fundamentals/main-concepts",
+        'About': "Nathalia Quintero & Angelly Cristancho. Inteligencia Artificial *Ejemplo de clase* Ingenieria de sistemas!"
+    }
+  )
 
 hide_streamlit_style = """
     <style>
