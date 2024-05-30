@@ -83,7 +83,7 @@ with st.spinner('Modelo está cargando..'):
 with st.sidebar:
     option = st.selectbox(
     "Que te gustaria usar para subir la foto?",
-    (" ","Tomar foto", "Subir archivo", "URL"),
+    ("Tomar foto", "Subir archivo", "URL"),
     index=None,
     placeholder="Selecciona como subir la foto",
     )
@@ -149,9 +149,7 @@ def reproducir_audio(mp3_fp):
     st.markdown(audio_html, unsafe_allow_html=True)
 
 
-# Generar y reproducir el saludo al inicio
-mp3_fp = generar_saludo()
-reproducir_audio(mp3_fp)
+
 
 class_names = open("./clases (1).txt", "r").readlines()
 
@@ -166,7 +164,9 @@ if option== "Tomar foto":
         img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
     
 else:
-    print("Selecciona una opcion para empear a predecir")
+    # Generar y reproducir el saludo al inicio
+    mp3_fp = generar_saludo()
+    reproducir_audio(mp3_fp)
 
 
 # Opción para cargar una imagen desde una URL
