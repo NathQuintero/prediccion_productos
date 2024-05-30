@@ -36,12 +36,10 @@ from io import BytesIO
 import warnings
 from gtts import gTTS
 import base64
-import pyttsx3
+
 
 warnings.filterwarnings("ignore")
 
-# Inicializar el motor de síntesis de voz
-engine = pyttsx3.init()
 
 # set some pre-defined configurations for the page, such as the page title, logo-icon, page loading state (whether the page is loaded automatically or you need to perform some action for loading)
 st.set_page_config(
