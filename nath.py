@@ -40,26 +40,6 @@ import base64
 
 warnings.filterwarnings("ignore")
 
-# Generar saludo
-def generar_saludo():
-    texto = "¡Hola! Bienvenido a la detección de productos."
-    tts = gTTS(text=texto, lang='es')
-    mp3_fp = BytesIO()
-    tts.write_to_fp(mp3_fp)
-    mp3_fp.seek(0)
-    return mp3_fp
-
-def reproducir_audio(mp3_fp):
-    audio_bytes = mp3_fp.read()
-    audio_base64 = base64.b64encode(audio_bytes).decode()
-    audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
-    st.markdown(audio_html, unsafe_allow_html=True)
-
-# Reproducir el saludo al inicio
-mp3_fp = generar_saludo()
-reproducir_audio(mp3_fp)
-
-
 # set some pre-defined configurations for the page, such as the page title, logo-icon, page loading state (whether the page is loaded automatically or you need to perform some action for loading)
 st.set_page_config(
   page_title="¿Que producto es?",
@@ -89,7 +69,24 @@ def load_model():
 with st.spinner('Modelo está cargando..'):
     model = load_model()
 
+# Generar saludo
+def generar_saludo():
+    texto = "¡Hola! Bienvenido a la detección de productos."
+    tts = gTTS(text=texto, lang='es')
+    mp3_fp = BytesIO()
+    tts.write_to_fp(mp3_fp)
+    mp3_fp.seek(0)
+    return mp3_fp
 
+def reproducir_audio(mp3_fp):
+    audio_bytes = mp3_fp.read()
+    audio_base64 = base64.b64encode(audio_bytes).decode()
+    audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
+    st.markdown(audio_html, unsafe_allow_html=True)
+
+# Reproducir el saludo al inicio
+mp3_fp = generar_saludo()
+reproducir_audio(mp3_fp)
 
 with st.sidebar:
     option = st.selectbox(
