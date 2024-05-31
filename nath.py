@@ -117,7 +117,7 @@ def generar_audio(texto):
 
 class_names = open("./clases (1).txt", "r").readlines()
 
-img_file_buffer = None
+#img_file_buffer = None
 
 if option == "Tomar foto":
     img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
