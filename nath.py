@@ -1,30 +1,3 @@
-# streamlit_audio_recorder y whisper by Alfredo Diaz - version Mayo 2024
-
-# En VsC seleccione la version de Python (recomiendo 3.9) 
-#CTRL SHIFT P  para crear el enviroment (Escriba Python Create Enviroment) y luego venv 
-
-#o puede usar el siguiente comando en el shell
-#Vaya a "view" en el menú y luego a terminal y lance un terminal.
-#python -m venv env
-
-#Verifique que el terminal inicio con el enviroment o en la carpeta del proyecto active el env.
-#cd D:\flores\env\Scripts\
-#.\activate 
-
-#Debe quedar asi: (.venv) D:\proyectos_ia\Flores>
-
-#Puedes verificar que no tenga ningun libreria preinstalada con
-#pip freeze
-#Actualicie pip con pip install --upgrade pip
-
-#pip install tensorflow==2.15 La que tiene instalada Google Colab o con la versión qu fué entrenado el modelo
-#Verifique se se instaló numpy, no trate de instalar numpy con pip install numpy, que puede instalar una version diferente
-#pip install streamlit
-#Verifique se se instaló no trante de instalar con pip install pillow
-#Esta instalacion se hace si la requiere pip install opencv-python
-
-#Descargue una foto de una flor que le sirva de ícono 
-
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import streamlit as st  
@@ -39,10 +12,16 @@ import base64
 
 warnings.filterwarnings("ignore")
 
+# Configuración de la página
 st.set_page_config(
-    page_title="Reconocimiento de Productos",
-    page_icon=":smile:",
-    initial_sidebar_state='auto'
+    page_title="¿Qué producto es?",
+    page_icon="icono.ico",
+    initial_sidebar_state='auto',
+    menu_items={
+        'Report a bug': 'http://www.unab.edu.co',
+        'Get Help': "https://docs.streamlit.io/get-started/fundamentals/main-concepts",
+        'About': "Nathalia Quintero & Angelly Cristancho. Inteligencia Artificial *Ejemplo de clase* Ingeniería de sistemas!"
+    }
 )
 
 hide_streamlit_style = """
@@ -62,19 +41,59 @@ def load_model():
 with st.spinner('Modelo está cargando..'):
     model = load_model()
 
-with st.sidebar:
-    st.video("https://www.youtube.com/watch?v=xxUHCtHnVk8")
-    st.title("Reconocimiento de imagen")
-    st.subheader("Reconocimiento de imagen para productos")
-    confianza = st.slider("Seleccione el nivel de Confianza", 0, 100, 50) / 100
+# Generar saludo
+def generar_saludo():
+    texto = "¡Hola! soy Beimax, tu asistente neuronal personal, ¿cómo te sientes hoy?"
+    tts = gTTS(text=texto, lang='es')
+    mp3_fp = BytesIO()
+    tts.write_to_fp(mp3_fp)
+    mp3_fp.seek(0)
+    return mp3_fp
 
-st.image('productose.jpg')
-st.title("Modelo de Identificación de Imagenes")
-st.write("Desarrollo Proyecto Final de Inteligencia Artificial : Aplicando modelos de Redes Convolucionales e Imagenes")
-st.write("""
-         # Detección de Productos
-         """
-         )
+def reproducir_audio(mp3_fp):
+    try:
+        audio_bytes = mp3_fp.read()
+        audio_base64 = base64.b64encode(audio_bytes).decode()
+        audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
+        st.markdown(audio_html, unsafe_allow_html=True)
+    except Exception as e:
+        st.error(f"Error al reproducir el audio: {e}")
+
+# Reproducir el saludo al inicio
+mp3_fp = generar_saludo()
+reproducir_audio(mp3_fp)
+
+with st.sidebar:
+    option = st.selectbox(
+        "¿Qué te gustaría usar para subir la foto?",
+        ("Tomar foto", "Subir archivo", "URL"),
+        index=None,
+        placeholder="Selecciona cómo subir la foto"
+    )
+    confianza = st.slider("Seleccione el nivel de confianza", 0, 100, 50) / 100
+    st.markdown("¿Cómo poner el producto correctamente en la cámara?") 
+
+    # Ruta del archivo de video
+    video_file_path = './videos/SI.mp4'
+    try:
+        with open(video_file_path, 'rb') as video_file:
+            video_bytes = video_file.read()
+        st.video(video_bytes)
+    except FileNotFoundError:
+        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
+
+    # Ruta del archivo de video
+    video_file_path = './videos/NO.mp4'
+    try:
+        with open(video_file_path, 'rb') as video_file:
+            video_bytes = video_file.read()
+        st.video(video_bytes)
+    except FileNotFoundError:
+        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
+
+# Título de la página
+st.image("./videos/banner.png", use_column_width=True)
+st.write("# Detección de Productos")
 
 def import_and_predict(image_data, model, class_names):
     if image_data.mode != 'RGB':
@@ -82,7 +101,7 @@ def import_and_predict(image_data, model, class_names):
         
     image_data = image_data.resize((180, 180))
     image = tf.keras.utils.img_to_array(image_data)
-    image = tf.expand_dims(image, 0)  # Create a batch
+    image = tf.expand_dims(image, 0)  # Crear un batch
     prediction = model.predict(image)
     index = np.argmax(prediction)
     score = tf.nn.softmax(prediction[0])
@@ -96,23 +115,17 @@ def generar_audio(texto):
     mp3_fp.seek(0)
     return mp3_fp
 
-def reproducir_audio(mp3_fp):
-    audio_bytes = mp3_fp.read()
-    audio_base64 = base64.b64encode(audio_bytes).decode()
-    audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
-    st.markdown(audio_html, unsafe_allow_html=True)
-
 class_names = open("./clases (1).txt", "r").readlines()
 
-# Opción para capturar una imagen desde la cámara
-img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
+img_file_buffer = None
 
-# Opción para cargar una imagen desde un archivo local
-if img_file_buffer is None:
+if option == "Tomar foto":
+    img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
+    if img_file_buffer is None:
+        img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
+elif option == "Subir archivo":
     img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
-
-# Opción para cargar una imagen desde una URL
-if img_file_buffer is None:
+elif option == "URL":
     image_url = st.text_input("O ingrese la URL de la imagen")
     if image_url:
         try:
