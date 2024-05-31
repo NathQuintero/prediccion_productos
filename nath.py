@@ -60,15 +60,6 @@ hide_streamlit_style = """
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-@st.cache_resource
-def load_model():
-    model_path = os.path.join(os.getcwd(), 'productosa.h5')
-    model = tf.keras.models.load_model(model_path)
-    return model
-
-with st.spinner('Modelo está cargando..'):
-    model = load_model()
-
 # Generar saludo
 def generar_saludo():
     texto = "¡Hola! Bienvenido a la detección de productos."
@@ -87,6 +78,16 @@ def reproducir_audio(mp3_fp):
 # Reproducir el saludo al inicio
 mp3_fp = generar_saludo()
 reproducir_audio(mp3_fp)
+
+@st.cache_resource
+def load_model():
+    model_path = os.path.join(os.getcwd(), 'productosa.h5')
+    model = tf.keras.models.load_model(model_path)
+    return model
+
+with st.spinner('Modelo está cargando..'):
+    model = load_model()
+
 
 with st.sidebar:
     option = st.selectbox(
