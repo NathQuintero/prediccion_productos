@@ -37,20 +37,13 @@ import warnings
 from gtts import gTTS
 import base64
 
-
 warnings.filterwarnings("ignore")
 
-# set some pre-defined configurations for the page, such as the page title, logo-icon, page loading state (whether the page is loaded automatically or you need to perform some action for loading)
 st.set_page_config(
-  page_title="¿Que producto es?",
-  page_icon="icono.ico",
-  initial_sidebar_state='auto',
-  menu_items={
-        'Report a bug': 'http://www.unab.edu.co',
-        'Get Help': "https://docs.streamlit.io/get-started/fundamentals/main-concepts",
-        'About': "Nathalia Quintero & Angelly Cristancho. Inteligencia Artificial *Ejemplo de clase* Ingenieria de sistemas!"
-    }
-  )
+    page_title="Reconocimiento de Productos",
+    page_icon=":smile:",
+    initial_sidebar_state='auto'
+)
 
 hide_streamlit_style = """
     <style>
@@ -59,8 +52,6 @@ hide_streamlit_style = """
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
-
 
 @st.cache_resource
 def load_model():
@@ -71,62 +62,15 @@ def load_model():
 with st.spinner('Modelo está cargando..'):
     model = load_model()
 
-# Generar saludo
-def generar_saludo():
-    texto = "¡Hola! soy beimax, tu asistente neuronal personal, ¿como te sientes hoy?"
-    tts = gTTS(text=texto, lang='es')
-    mp3_fp = BytesIO()
-    tts.write_to_fp(mp3_fp)
-    mp3_fp.seek(0)
-    return mp3_fp
-
-def reproducir_audio(mp3_fp):
-    audio_bytes = mp3_fp.read()
-    audio_base64 = base64.b64encode(audio_bytes).decode()
-    audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
-    st.markdown(audio_html, unsafe_allow_html=True)
-
-# Reproducir el saludo al inicio
-mp3_fp = generar_saludo()
-reproducir_audio(mp3_fp)
-
 with st.sidebar:
-    option = st.selectbox(
-    "Que te gustaria usar para subir la foto?",
-    ("Tomar foto", "Subir archivo", "URL"),
-    index=None,
-    placeholder="Selecciona como subir la foto",
-    )
+    st.video("https://www.youtube.com/watch?v=xxUHCtHnVk8")
+    st.title("Reconocimiento de imagen")
+    st.subheader("Reconocimiento de imagen para productos")
     confianza = st.slider("Seleccione el nivel de Confianza", 0, 100, 50) / 100
-    st.markdown("Cómo poner el producto correctamente en la camara?") 
-    # Ruta del archivo de video
-    video_file_path = './videos/SI.mp4'
-    # Lee el contenido del archivo de video
-    try:
-        with open(video_file_path, 'rb') as video_file:
-            video_bytes = video_file.read()
 
-        # Reproduce el video
-        st.video(video_bytes)
-    except FileNotFoundError:
-        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
-
-
-    # Ruta del archivo de video
-    video_file_path = './videos/NO.mp4'
-    # Lee el contenido del archivo de video
-    try:
-        with open(video_file_path, 'rb') as video_file:
-            video_bytes = video_file.read()
-
-        # Reproduce el video
-        st.video(video_bytes)
-    except FileNotFoundError:
-        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
-    
-
-# Título de la página
-st.image("./videos/banner.png", use_column_width=True)
+st.image('productose.jpg')
+st.title("Modelo de Identificación de Imagenes")
+st.write("Desarrollo Proyecto Final de Inteligencia Artificial : Aplicando modelos de Redes Convolucionales e Imagenes")
 st.write("""
          # Detección de Productos
          """
@@ -160,19 +104,12 @@ def reproducir_audio(mp3_fp):
 
 class_names = open("./clases (1).txt", "r").readlines()
 
-img_file_buffer = None
-
-
 # Opción para capturar una imagen desde la cámara
 img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
 # Opción para cargar una imagen desde un archivo local
 if img_file_buffer is None:
     img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
-
-
-print("Selecciona una opcion para empear a predecir")
-
 
 # Opción para cargar una imagen desde una URL
 if img_file_buffer is None:
@@ -183,8 +120,6 @@ if img_file_buffer is None:
             img_file_buffer = BytesIO(response.content)
         except Exception as e:
             st.error(f"Error al cargar la imagen desde la URL: {e}")
-
-
 
 # Procesar la imagen y realizar la predicción
 if img_file_buffer:
