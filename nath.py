@@ -123,11 +123,9 @@ if option == "Tomar foto":
     img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
     if img_file_buffer is None:
         img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
-
-if option == "Subir archivo" or (option == "Tomar foto" and img_file_buffer is None):
+elif option == "Subir archivo":
     img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
-
-if option == "URL" or (option == "Subir archivo" and img_file_buffer is None):
+elif option == "URL":
     image_url = st.text_input("O ingrese la URL de la imagen")
     if image_url:
         try:
