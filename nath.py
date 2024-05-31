@@ -64,12 +64,7 @@ mp3_fp = generar_saludo()
 reproducir_audio(mp3_fp)
 
 with st.sidebar:
-    option = st.selectbox(
-        "¿Qué te gustaría usar para subir la foto?",
-        ("Tomar foto", "Subir archivo", "URL"),
-        index=None,
-        placeholder="Selecciona cómo subir la foto"
-    )
+   
     confianza = st.slider("Seleccione el nivel de confianza", 0, 100, 50) / 100
     st.markdown("¿Cómo poner el producto correctamente en la cámara?") 
 
@@ -116,6 +111,13 @@ def generar_audio(texto):
     return mp3_fp
 
 class_names = open("./clases (1).txt", "r").readlines()
+
+option = st.selectbox(
+    "¿Qué te gustaría usar para subir la foto?",
+    ("Tomar foto", "Subir archivo", "URL"),
+    index=None,
+    placeholder="Selecciona cómo subir la foto"
+)
 
 img_file_buffer = None
 
