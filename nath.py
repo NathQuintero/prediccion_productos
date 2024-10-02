@@ -63,7 +63,7 @@ def reproducir_audio(mp3_fp):
 mp3_fp = generar_saludo()
 reproducir_audio(mp3_fp)
 
-with st.sidebar:
+with st.expander("Como tomar la foro correctamente"):
    
     confianza = st.slider("Seleccione el nivel de confianza", 0, 100, 50) / 100
     st.markdown("¿Cómo poner el producto correctamente en la cámara?") 
