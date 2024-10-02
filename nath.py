@@ -95,13 +95,12 @@ option = st.selectbox(
     index=None,
     placeholder="Selecciona cómo subir la foto"
 )
+confianza = st.slider("Seleccione el nivel de confianza", 0, 100, 50) / 100
 
 img_file_buffer = None
 
 if option == "Tomar foto":
     img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
-    if img_file_buffer is None:
-        img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
 elif option == "Subir archivo":
     img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
 elif option == "URL":
@@ -145,7 +144,6 @@ else:
 
 with st.expander("Como tomar la FOTO correctamente"):
    
-    confianza = st.slider("Seleccione el nivel de confianza", 0, 100, 50) / 100
     st.markdown("¿Cómo poner el producto correctamente en la cámara?") 
 
     # Ruta del archivo de video
