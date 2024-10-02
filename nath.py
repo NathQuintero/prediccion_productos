@@ -63,29 +63,6 @@ def reproducir_audio(mp3_fp):
 mp3_fp = generar_saludo()
 reproducir_audio(mp3_fp)
 
-with st.expander("Como tomar la foro correctamente"):
-   
-    confianza = st.slider("Seleccione el nivel de confianza", 0, 100, 50) / 100
-    st.markdown("¿Cómo poner el producto correctamente en la cámara?") 
-
-    # Ruta del archivo de video
-    video_file_path = './videos/SI.mp4'
-    try:
-        with open(video_file_path, 'rb') as video_file:
-            video_bytes = video_file.read()
-        st.video(video_bytes)
-    except FileNotFoundError:
-        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
-
-    # Ruta del archivo de video
-    video_file_path = './videos/NO.mp4'
-    try:
-        with open(video_file_path, 'rb') as video_file:
-            video_bytes = video_file.read()
-        st.video(video_bytes)
-    except FileNotFoundError:
-        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
-
 # Título de la página
 st.image("./videos/banner.png", use_column_width=True)
 st.write("# Detección de Productos")
@@ -163,3 +140,29 @@ if img_file_buffer:
         st.error(f"Error al procesar la imagen: {e}")
 else:
     st.text("Por favor, cargue una imagen usando una de las opciones anteriores.")
+
+#informacion para tomar foto
+
+with st.expander("Como tomar la FOTO correctamente"):
+   
+    confianza = st.slider("Seleccione el nivel de confianza", 0, 100, 50) / 100
+    st.markdown("¿Cómo poner el producto correctamente en la cámara?") 
+
+    # Ruta del archivo de video
+    video_file_path = './videos/SI.mp4'
+    try:
+        with open(video_file_path, 'rb') as video_file:
+            video_bytes = video_file.read()
+        st.video(video_bytes)
+    except FileNotFoundError:
+        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
+
+    # Ruta del archivo de video
+    video_file_path = './videos/NO.mp4'
+    try:
+        with open(video_file_path, 'rb') as video_file:
+            video_bytes = video_file.read()
+        st.video(video_bytes)
+    except FileNotFoundError:
+        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
+
