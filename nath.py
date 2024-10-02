@@ -43,7 +43,7 @@ with st.spinner('Modelo está cargando..'):
 
 # Generar saludo
 def generar_saludo():
-    texto = "¡Hola! soy Beimax, tu asistente neuronal personal, ¿Que producto vamos a identificar hoy?"
+    texto = "¡Hola! soy Órasi, tu asistente neuronal personal, ¿Que producto vamos a identificar hoy?"
     tts = gTTS(text=texto, lang='es')
     mp3_fp = BytesIO()
     tts.write_to_fp(mp3_fp)
