@@ -163,4 +163,3 @@ with st.expander("Como tomar la FOTO correctamente"):
         st.video(video_bytes)
     except FileNotFoundError:
         st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
-
